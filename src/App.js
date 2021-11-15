@@ -15,7 +15,7 @@ function App() {
         <div className="App">
             <Title />
             <LocationEntry />
-            <ViewForecast />
+            <ViewForecast location={location} />
             <DayRange />
         </div>
     )
