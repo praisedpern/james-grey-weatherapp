@@ -2,20 +2,25 @@ import DayForecast from './DayForecast'
 import { useState, useEffect } from 'react'
 
 const ViewForecast = ({ location }) => {
-    const [weatherData, setWeatherData] = useState({});
+    const [weatherData, setWeatherData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=0&lon=52&exclude=hourly&appid=${process.env.REACT_APP_API_KEY}`)
     .then((response) => {
-        console.log(response);
         return response.json();
     }).then((response) => {
-        console.log(response);
-        setWeatherData(response);
+        setWeatherData(response.daily);
         setIsLoading(false);
-        console.log(weatherData);
     })
     }, [location]);
+
+    const thingsToWatch = [weatherData, location]
+
+    useEffect(() => {
+        console.log("A state has changed, these are the current values:");
+        thingsToWatch.forEach((thing, index) => {console.log(thing, `at index ${index}`)});
+        return;
+    }, thingsToWatch);
 
     return (
         <section id="view-forecast">
